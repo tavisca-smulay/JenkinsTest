@@ -9,10 +9,10 @@ public class MarsRoboRover {
         
         MarsRoboRover rover = new MarsRoboRover();
         rover.getCurrentPosition(3,3,"E");
-        rover.getCommand("MMRMMRMRRM");
+        String commands = "MMRMMRMRRM";
+        rover.getCommand(commands);
 
         System.out.println("currentPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
-
         System.out.println("commands..." + commands);
         System.out.println("newPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
     }
@@ -29,14 +29,30 @@ public class MarsRoboRover {
         }
     }
 
-    private static void rove(char command) {
+    private void setDirectionToEast(){
+        direction = "E";
+    }
+
+    private void setDirectionToWest(){
+        direction = "W";
+    }
+
+    private void setDirectionToNorth(){
+        direction = "N";
+    }
+
+    private void setDirectionToSouth(){
+        direction = "S";
+    }
+
+    private void rove(char command) {
         if (direction.equalsIgnoreCase("N")) {
             switch (command) {
                 case 'L':
-                    direction = "W";
+                    setDirectionToWest();
                     break;
                 case 'R':
-                    direction = "E";
+                    setDirectionToEast();
                     break;
                 case 'M':
                     y_coordinate++;
@@ -45,10 +61,10 @@ public class MarsRoboRover {
         } else if (direction.equalsIgnoreCase("E")) {
             switch (command) {
                 case 'L':
-                    direction = "N";
+                    setDirectionToNorth();
                     break;
                 case 'R':
-                    direction = "S";
+                    setDirectionToSouth();
                     break;
                 case 'M':
                     x_coordinate++;
@@ -57,10 +73,10 @@ public class MarsRoboRover {
         } else if (direction.equalsIgnoreCase("S")) {
             switch (command) {
                 case 'L':
-                    direction = "E";
+                    setDirectionToEast();
                     break;
                 case 'R':
-                    direction = "W";
+                    setDirectionToWest();
                     break;
                 case 'M':
                     y_coordinate--;
@@ -69,10 +85,10 @@ public class MarsRoboRover {
         } else if (direction.equalsIgnoreCase("W")) {
             switch (command) {
                 case 'L':
-                    direction = "S";
+                    setDirectionToSouth();
                     break;
                 case 'R':
-                    direction = "N";
+                    setDirectionToNorth();
                     break;
                 case 'M':
                     x_coordinate--;
