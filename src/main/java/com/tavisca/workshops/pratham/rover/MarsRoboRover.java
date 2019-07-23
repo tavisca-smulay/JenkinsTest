@@ -9,13 +9,9 @@ public class MarsRoboRover {
         
         MarsRoboRover rover = new MarsRoboRover();
         rover.getCurrentPosition(3,3,"E");
-        String commands = "MMRMMRMRRM";
+        rover.getCommand("MMRMMRMRRM");
 
         System.out.println("currentPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
-
-        for (char command : commands.toCharArray()) {
-            rove(command);
-        }
 
         System.out.println("commands..." + commands);
         System.out.println("newPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
@@ -25,6 +21,12 @@ public class MarsRoboRover {
         this.x_coordinate = x_coordinate;
         this.y_coordinate = y_coordinate;
         this.direction = direction;
+    }
+
+    private void getCommand(String command){
+        for (char eachCommand : command.toCharArray()) {
+            rove(eachCommand);
+        }
     }
 
     private static void rove(char command) {
