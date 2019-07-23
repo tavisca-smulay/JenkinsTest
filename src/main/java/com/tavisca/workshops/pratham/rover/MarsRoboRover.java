@@ -6,9 +6,9 @@ public class MarsRoboRover {
     private static String direction = "";
 
     public static void main(String[] args) {
-        
+
         MarsRoboRover rover = new MarsRoboRover();
-        rover.getCurrentPosition(3,3,"E");
+        rover.getCurrentPosition(3, 3, "E");
         String commands = "MMRMMRMRRM";
         rover.getCommand(commands);
 
@@ -16,84 +16,79 @@ public class MarsRoboRover {
         System.out.println("commands..." + commands);
         System.out.println("newPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
     }
-    
-    private void getCurrentPosition(int x_coordinate, int y_coordinate, String direction ){
+
+    private void getCurrentPosition(int x_coordinate, int y_coordinate, String direction) {
         this.x_coordinate = x_coordinate;
         this.y_coordinate = y_coordinate;
         this.direction = direction;
     }
 
-    private void getCommand(String command){
+    private void getCommand(String command) {
         for (char eachCommand : command.toCharArray()) {
             rove(eachCommand);
         }
     }
 
-    private void setDirectionToEast(){
+    private void setDirectionToEast() {
         direction = "E";
     }
 
-    private void setDirectionToWest(){
+    private void setDirectionToWest() {
         direction = "W";
     }
 
-    private void setDirectionToNorth(){
+    private void setDirectionToNorth() {
         direction = "N";
     }
 
-    private void setDirectionToSouth(){
+    private void setDirectionToSouth() {
         direction = "S";
     }
 
+    private void moveLeft(){
+        if (direction.equalsIgnoreCase("N"))
+            setDirectionToWest();
+        else if (direction.equalsIgnoreCase("E"))
+            setDirectionToNorth();
+        else if (direction.equalsIgnoreCase("S"))
+            setDirectionToEast();
+        else if (direction.equalsIgnoreCase("W"))
+            setDirectionToSouth();
+    }
+
+    private void moveRight(){
+        if (direction.equalsIgnoreCase("N"))
+            setDirectionToEast();
+        else if (direction.equalsIgnoreCase("E"))
+            setDirectionToSouth();
+        else if (direction.equalsIgnoreCase("S"))
+            setDirectionToWest();
+        else if (direction.equalsIgnoreCase("W"))
+            setDirectionToNorth();
+    }
+
+    private void move(){
+        if (direction.equalsIgnoreCase("N"))
+            y_coordinate++;
+        else if (direction.equalsIgnoreCase("E"))
+            x_coordinate++;
+        else if (direction.equalsIgnoreCase("S"))
+            y_coordinate--;
+        else if (direction.equalsIgnoreCase("W"))
+            x_coordinate--;
+    }
+
     private void rove(char command) {
-        if (direction.equalsIgnoreCase("N")) {
-            switch (command) {
-                case 'L':
-                    setDirectionToWest();
-                    break;
-                case 'R':
-                    setDirectionToEast();
-                    break;
-                case 'M':
-                    y_coordinate++;
-                    break;
-            }
-        } else if (direction.equalsIgnoreCase("E")) {
-            switch (command) {
-                case 'L':
-                    setDirectionToNorth();
-                    break;
-                case 'R':
-                    setDirectionToSouth();
-                    break;
-                case 'M':
-                    x_coordinate++;
-                    break;
-            }
-        } else if (direction.equalsIgnoreCase("S")) {
-            switch (command) {
-                case 'L':
-                    setDirectionToEast();
-                    break;
-                case 'R':
-                    setDirectionToWest();
-                    break;
-                case 'M':
-                    y_coordinate--;
-                    break;
-            }
-        } else if (direction.equalsIgnoreCase("W")) {
-            switch (command) {
-                case 'L':
-                    setDirectionToSouth();
-                    break;
-                case 'R':
-                    setDirectionToNorth();
-                    break;
-                case 'M':
-                    x_coordinate--;
-                    break;
-            }
+        switch (command) {
+            case 'L':
+                moveLeft();
+                break;
+            case 'R':
+                moveRight();
+                break;
+            case 'M':
+                move();
+                break;
         }
     }
 }
