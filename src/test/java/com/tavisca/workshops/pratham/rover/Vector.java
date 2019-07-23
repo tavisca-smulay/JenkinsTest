@@ -1,10 +1,12 @@
 package com.tavisca.workshops.pratham.rover;
 
+import java.util.HashMap;
+
 public class Vector {
 
-    private final int x;
-    private final int y;
-    private final char direction;
+    public final int x;
+    public final int y;
+    public final char direction;
 
     public Vector(int x, int y, char direction) {
         this.x = x;
@@ -12,29 +14,49 @@ public class Vector {
         this.direction = direction;
     }
 
-
-    public int x() {
-        return x;
-    }
-
-    public int y() {
-        return y;
-    }
-
-    public char direction() {
-        return direction;
-    }
-
     public Vector turnLeft() {
-        char newDirection = '\0';
-        if(direction == 'N')
-            newDirection = 'W';
-        else if(direction == 'E')
-            newDirection = 'N';
-        else if(direction == 'S')
-            newDirection = 'E';
-        else if(direction == 'W')
-            newDirection = 'S';
-        return new Vector(this.x, this.y, newDirection);
+        return new Vector(this.x, this.y, leftMap.get(this.direction));
+    }
+
+    public Vector turnRight() {
+        return new Vector(this.x, this.y, rightMap.get(this.direction));
+    }
+
+    private static HashMap<Character, Character> leftMap = new HashMap<>() {{
+        put('N', 'W');
+        put('W', 'S');
+        put('S', 'E');
+        put('E', 'N');
+    }};
+
+    private static HashMap<Character, Character> rightMap = new HashMap<>() {{
+        put('N', 'E');
+        put('W', 'N');
+        put('S', 'W');
+        put('E', 'S');
+    }};
+
+    private int incrementCoordinate(int coordinateValue){
+        return coordinateValue+1;
+    }
+
+    private int decrementCoordinate(int coordinateValue){
+        return coordinateValue-1;
+    }
+
+    public Vector moveUp() {
+        return new Vector(this.x, incrementCoordinate(this.y), this.direction);
+    }
+
+    public Vector moveDown() {
+        return new Vector(this.x, decrementCoordinate(this.y), this.direction);
+    }
+
+    public Vector moveRight() {
+        return new Vector(incrementCoordinate(this.x), this.y, this.direction);
+    }
+
+    public Vector moveLeft() {
+        return new Vector(decrementCoordinate(this.x), this.y, this.direction);
     }
 }
