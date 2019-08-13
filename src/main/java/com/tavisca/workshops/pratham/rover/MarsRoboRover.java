@@ -1,94 +1,81 @@
 package com.tavisca.workshops.pratham.rover;
 
-public class MarsRoboRover {
-    private static int y_coordinate = 0;
-    private static int x_coordinate = 0;
-    private static String direction = "";
+public class MarsRoboRover
+{
+	private static int y = 0;
+	private static int x = 0;
+	private static String dir = "";
 
-    public static void main(String[] args) {
+	public static void main(String[] args)
+	{
+		String currentPosition = "3 3 E";
+		String commands = "MMRMMRMRRM";
 
-        MarsRoboRover rover = new MarsRoboRover();
-        rover.getCurrentPosition(3, 3, "E");
-        String commands = "MMRMMRMRRM";
-        rover.getCommand(commands);
+		String[] positions = currentPosition.split(" ");
+		x = Integer.valueOf(positions[0]);
+		y = Integer.valueOf(positions[1]);
+		dir = positions[2];
 
-        System.out.println("currentPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
-        System.out.println("commands..." + commands);
-        System.out.println("newPosition..." + x_coordinate + " " + y_coordinate + " " + direction);
-    }
+		for (char command : commands.toCharArray())
+		{
+			rove(command);
+		}
 
-    private void getCurrentPosition(int x_coordinate, int y_coordinate, String direction) {
-        this.x_coordinate = x_coordinate;
-        this.y_coordinate = y_coordinate;
-        this.direction = direction;
-    }
+		System.out.println("currentPosition..." + currentPosition);
+		System.out.println("commands..." + commands);
+		System.out.println("newPosition..." + x + " " + y + " " + dir);
+	}
 
-    private void getCommand(String command) {
-        for (char eachCommand : command.toCharArray()) {
-            rove(eachCommand);
-        }
-    }
+	private static void rove(char command) {
+		if (dir.equalsIgnoreCase("N")) {
+			switch (command) {
+			case 'L':
+				dir = "W";
+				break;
+			case 'R':
+				dir = "E";
+				break;
+			case 'M':
+				y++;
+				break;
+			}
+		} else if (dir.equalsIgnoreCase("E")) {
+			switch (command) {
+			case 'L':
+				dir = "N";
+				break;
+			case 'R':
+				dir = "S";
+				break;
+			case 'M':
+				x++;
+				break;
+			}
+		} else if (dir.equalsIgnoreCase("S")) {
+			switch (command) {
+			case 'L':
+				dir = "E";
+				break;
+			case 'R':
+				dir = "W";
+				break;
+			case 'M':
+				y--;
+				break;
+			}
+		} else if (dir.equalsIgnoreCase("W")) {
+			switch (command) {
+			case 'L':
+				dir = "S";
+				break;
+			case 'R':
+				dir = "N";
+				break;
+			case 'M':
+				x--;
+				break;
+			}
+		}
+	}
 
-    private void setDirectionToEast() {
-        direction = "E";
-    }
-
-    private void setDirectionToWest() {
-        direction = "W";
-    }
-
-    private void setDirectionToNorth() {
-        direction = "N";
-    }
-
-    private void setDirectionToSouth() {
-        direction = "S";
-    }
-
-    private void moveLeft(){
-        if (direction.equalsIgnoreCase("N"))
-            setDirectionToWest();
-        else if (direction.equalsIgnoreCase("E"))
-            setDirectionToNorth();
-        else if (direction.equalsIgnoreCase("S"))
-            setDirectionToEast();
-        else if (direction.equalsIgnoreCase("W"))
-            setDirectionToSouth();
-    }
-
-    private void moveRight(){
-        if (direction.equalsIgnoreCase("N"))
-            setDirectionToEast();
-        else if (direction.equalsIgnoreCase("E"))
-            setDirectionToSouth();
-        else if (direction.equalsIgnoreCase("S"))
-            setDirectionToWest();
-        else if (direction.equalsIgnoreCase("W"))
-            setDirectionToNorth();
-    }
-
-    private void move(){
-        if (direction.equalsIgnoreCase("N"))
-            y_coordinate++;
-        else if (direction.equalsIgnoreCase("E"))
-            x_coordinate++;
-        else if (direction.equalsIgnoreCase("S"))
-            y_coordinate--;
-        else if (direction.equalsIgnoreCase("W"))
-            x_coordinate--;
-    }
-
-    private void rove(char command) {
-        switch (command) {
-            case 'L':
-                moveLeft();
-                break;
-            case 'R':
-                moveRight();
-                break;
-            case 'M':
-                move();
-                break;
-        }
-    }
 }
